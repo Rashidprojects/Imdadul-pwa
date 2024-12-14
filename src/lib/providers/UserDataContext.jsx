@@ -7,6 +7,8 @@ const initialState = {
   currentData: [],
   loading: false,
   error: null,
+  installments: [],
+  installment: { name: '', date: '', receiptNo: '', receivedAmount: '' },
   editingUser: null, // Add the editingUser state here
 };
 
@@ -15,6 +17,8 @@ const CURRENT_DATA = 'CURRENT_DATA';
 const SET_LOADING = 'SET_LOADING';
 const SET_ERROR = 'SET_ERROR';
 const UPDATE_USER = 'UPDATE_USER';
+const SET_INSTALLMENT = 'SET_INSTALLMENT';
+const ADD_INSTALLMENT = 'ADD_INSTALLMENT';
 const DELETE_USER = 'DELETE_USER';
 const SET_EDITING_USER = 'SET_EDITING_USER'; // Add action type for editing user
 
@@ -35,10 +39,48 @@ const userReducer = (state, action) => {
           user.id === action.payload.id ? action.payload : user
         ),
       };
-      case DELETE_USER:
+
+      case SET_INSTALLMENT:
+        console.log("SET_INSTALLMENT action received:", action.payload);
         return {
           ...state,
-          users: state.users.filter((user) => user.id !== action.payload),
+          users: state.users.map((user) => {
+            if (user.id === action.payload.id) {
+              console.log("Updating user installment:", user.id);
+              return {
+                ...user,
+                installment: {
+                  ...user.installment,
+                  [action.payload.name]: action.payload.value,
+                },
+              };
+            }
+            return user;
+          }),
+        };
+      
+    
+    case ADD_INSTALLMENT:
+      return {
+        ...state,
+        users: state.users.map((user) => {
+          if (user.id === action.payload.id) {
+            return {
+              ...user,
+              installments: [
+                ...(user.installments || []),
+                action.payload.installment,
+              ],
+            };
+          }
+          return user;
+        }),
+      };
+   
+    case DELETE_USER:
+      return {
+        ...state,
+        users: state.users.filter((user) => user.id !== action.payload),
       };      
     case SET_EDITING_USER: // Handle the editing user state
       return { ...state, editingUser: action.payload };

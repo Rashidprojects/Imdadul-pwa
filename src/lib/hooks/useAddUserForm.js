@@ -40,7 +40,7 @@ export const useAddUserForm = () => {
     dispatch({ type: 'SET_FIELD', field: 'totalReceived', value: totalRecieved });
     dispatch({ type: 'SET_FIELD', field: 'pending', value: pending });
     dispatch({ type: 'SET_FIELD', field: 'subTotal', value: subTotal });
-  },[totalRecieved, pending, subTotal])
+  },[totalRecieved, pending, subTotal, dispatch])
   
 
   console.log('total amount on add form : ', state.totalAmount.replace(/,/g, ''));
@@ -125,7 +125,7 @@ export const useAddUserForm = () => {
       dispatch({ type: 'SET_ERROR', value: error.message });
     } finally {
       dispatch({ type: 'SET_LOADING', value: false });
-      navigate('/user-dashboard')
+      navigate('/')
     }
   };
 
