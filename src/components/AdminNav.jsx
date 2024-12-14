@@ -22,7 +22,7 @@ const AdminNav = ({ currentSection }) => {
         <div className="flex justify-between items-center w-full pl-2">
           <div className="flex justify-center items-center text-[14px] sm:text-[18px] font-medium">
             <button className="text-light"
-                onClick={() => navigate('/user-dashboard')}
+                onClick={() => navigate('/')}
             >
                 Dashboard
             </button>
