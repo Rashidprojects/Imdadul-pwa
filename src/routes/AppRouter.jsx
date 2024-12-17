@@ -3,10 +3,9 @@ import Admin from "../app/admin/Admin"
 import Dashboard from "../app/admin/Dashboard"
 import Home from "../app/(landingPage)/Home"
 import ProtectedRoute from "./ProtectedRoute"
-import EditData from "../components/EditData"
 import UserCollector from "../app/admin/UserCollector"
 import Profile from "../app/admin/Profile"
-import EditUser from "../components/UserEdit/EditUser"
+import EditingUser from "../components/useEditForm/EditingUser"
 
 const AppRouter = () => {
   return (
@@ -17,7 +16,7 @@ const AppRouter = () => {
           <Route path='admin-portal' element={<Admin />} />
           <Route path='/' element={ <ProtectedRoute> <Dashboard /> </ProtectedRoute>} />
           <Route path='add-user' element={ <ProtectedRoute> <UserCollector /> </ProtectedRoute>} />
-          <Route path='edit' element={ <ProtectedRoute> <EditUser /> </ProtectedRoute>} />
+          <Route path='edit' element={ <ProtectedRoute> <EditingUser /> </ProtectedRoute>} />
           <Route path='view-profile' element={ <ProtectedRoute> <Profile /> </ProtectedRoute>} />
         </Routes>
     </div>

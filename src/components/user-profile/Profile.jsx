@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
-import { useUserData } from "../../lib/providers/UserDataContext";
 import AdminNav from "../AdminNav";
 import { useNavigate } from "react-router-dom";
+import { useUserContext } from "../../lib/providers/UserDataContext";
 
 const ProfileView = () => {
-    const { state, deleteUser } = useUserData(); 
+    const { state, deleteUser } = useUserContext(); 
     const navigate = useNavigate()   
 
     const [isUser, setIsUser] = useState(null)

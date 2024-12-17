@@ -6,10 +6,10 @@ import { ImSearch } from "react-icons/im";
 import { MdPersonSearch } from "react-icons/md";
 import { FaEdit } from "react-icons/fa";
 import { useNavigate } from 'react-router-dom';
-import { useUserData } from '../../lib/providers/UserDataContext';
+import { useUserContext } from '../../lib/providers/UserDataContext';
 
 const MainTable = ({ isArea }) => {
-  const { state: userState, fetchUsers, setEditingUser } = useUserData();
+  const { state: userState, fetchUsers, setEditingUser } = useUserContext();
   const { state, setTotalItems } = usePagination();
   const { currentPage, itemsPerPage } = state;
   const navigate = useNavigate()
@@ -35,10 +35,7 @@ const MainTable = ({ isArea }) => {
   }, [filteredUsers.length]);
 
 
-  // Fetch users on component mount
-  useEffect(() => {
-    fetchUsers(); // Fetch user data
-  }, []);
+
 
 
   const handleFindUser = () => {
