@@ -1,5 +1,5 @@
 import { createContext, useReducer, useContext, useEffect } from 'react';
-import { fetchFundData, updateFundData, deleteFundData } from '../services/firestoreService';
+import { fetchFundData, deleteFundData } from '../services/firestoreService';
 import { useOnlineStatus } from '../hooks/useOnlineStatus';
 
 const initialState = {
@@ -8,7 +8,7 @@ const initialState = {
   loading: false,
   error: null,
   installments: [],
-  installment: { name: '', date: '', receiptNo: '', receivedAmount: '' },
+  newInstallment: { date: '', receiptNo: '', receivedAmount: '' },
   editingUser: null, // Add the editingUser state here
 };
 
@@ -17,8 +17,6 @@ const CURRENT_DATA = 'CURRENT_DATA';
 const SET_LOADING = 'SET_LOADING';
 const SET_ERROR = 'SET_ERROR';
 const UPDATE_USER = 'UPDATE_USER';
-const SET_INSTALLMENT = 'SET_INSTALLMENT';
-const ADD_INSTALLMENT = 'ADD_INSTALLMENT';
 const DELETE_USER = 'DELETE_USER';
 const SET_EDITING_USER = 'SET_EDITING_USER'; // Add action type for editing user
 
@@ -32,51 +30,6 @@ const userReducer = (state, action) => {
       return { ...state, loading: action.payload };
     case SET_ERROR:
       return { ...state, error: action.payload };
-    case UPDATE_USER:
-      return {
-        ...state,
-        users: state.users.map((user) =>
-          user.id === action.payload.id ? action.payload : user
-        ),
-      };
-
-      case SET_INSTALLMENT:
-        console.log("SET_INSTALLMENT action received:", action.payload);
-        return {
-          ...state,
-          users: state.users.map((user) => {
-            if (user.id === action.payload.id) {
-              console.log("Updating user installment:", user.id);
-              return {
-                ...user,
-                installment: {
-                  ...user.installment,
-                  [action.payload.name]: action.payload.value,
-                },
-              };
-            }
-            return user;
-          }),
-        };
-      
-    
-    case ADD_INSTALLMENT:
-      return {
-        ...state,
-        users: state.users.map((user) => {
-          if (user.id === action.payload.id) {
-            return {
-              ...user,
-              installments: [
-                ...(user.installments || []),
-                action.payload.installment,
-              ],
-            };
-          }
-          return user;
-        }),
-      };
-   
     case DELETE_USER:
       return {
         ...state,
@@ -111,16 +64,6 @@ export const UserDataProvider = ({ children }) => {
     }
   }, [state.users.length, isOnline]); 
 
-  const updateUser = async (id, updatedData) => {
-    try {
-      await updateFundData(id, updatedData); // Firestore update method
-      
-      // Dispatch the update action with the new data
-      dispatch({ type: UPDATE_USER, payload: { id, ...updatedData } });
-    } catch (error) {
-      dispatch({ type: SET_ERROR, payload: error.message });
-    }
-  };
 
   const deleteUser = async (id) => {
     try {
@@ -139,11 +82,11 @@ export const UserDataProvider = ({ children }) => {
 
   return (
     <UserDataContext.Provider
-      value={{ state, dispatch, updateUser, fetchUsers, deleteUser, setEditingUser }} // Add setEditingUser to the context
+      value={{ state, dispatch, fetchUsers, deleteUser, setEditingUser }} // Add setEditingUser to the context
     >
       {children}
     </UserDataContext.Provider>
   );
 };
 
-export const useUserData = () => useContext(UserDataContext);
+export const useUserContext = () => useContext(UserDataContext);

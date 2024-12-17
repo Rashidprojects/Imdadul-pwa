@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react"
-import { useUserData } from "../providers/UserDataContext";
+import { useUserContext } from "../providers/UserDataContext";
 
 export const useFilteredUsers = (users, areaCode, currentPage, itemsPerPage) => {
     const [filteredUsers, setFilteredUsers] = useState([]);
-    const { dispatch } = useUserData()
+    const { dispatch } = useUserContext()
 
 
     useEffect(() => {

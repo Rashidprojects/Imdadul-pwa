@@ -1,6 +1,6 @@
 import Form from "./Form"
 
-const EditUser = () => {
+const EditingUser = () => {
   return (
     <div>
         <Form />
@@ -8,4 +8,4 @@ const EditUser = () => {
   )
 }
 
-export default EditUser
+export default EditingUser
