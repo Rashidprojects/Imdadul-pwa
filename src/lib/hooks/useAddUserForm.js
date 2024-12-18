@@ -120,6 +120,7 @@ export const useAddUserForm = () => {
         console.log('Data saved to IndexedDB for offline sync with id : ', state.id);
       }
       dispatch({ type: 'RESET_FORM' });
+      dispatch({ type: 'SET_IS_INSTALLMENT', value: false })
 
     } catch (error) {
       dispatch({ type: 'SET_ERROR', value: error.message });

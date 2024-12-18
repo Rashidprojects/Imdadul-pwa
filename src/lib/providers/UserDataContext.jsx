@@ -7,8 +7,6 @@ const initialState = {
   currentData: [],
   loading: false,
   error: null,
-  installments: [],
-  newInstallment: { date: '', receiptNo: '', receivedAmount: '' },
   editingUser: null, // Add the editingUser state here
 };
 
@@ -16,7 +14,6 @@ const FETCH_USERS = 'FETCH_USERS';
 const CURRENT_DATA = 'CURRENT_DATA'; 
 const SET_LOADING = 'SET_LOADING';
 const SET_ERROR = 'SET_ERROR';
-const UPDATE_USER = 'UPDATE_USER';
 const DELETE_USER = 'DELETE_USER';
 const SET_EDITING_USER = 'SET_EDITING_USER'; // Add action type for editing user
 

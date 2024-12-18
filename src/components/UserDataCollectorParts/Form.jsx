@@ -50,7 +50,7 @@ const Form = () => {
                 <div className='w-[50%]'>
                     <label className='text-[15px] md:text-[20px]'>Area code</label> <br />
                     
-                    <select id="countries" 
+                    <select  
                         className='w-full border border-secondary text-secondary rounded-md bg-dark px-3 py-2 font-medium text-[15px] md:text-[20px] placeholder:text-primary placeholder:text-[13px] placeholder:sm:text-[16px]
                         focus:ring-secondary focus:border-secondary ' 
                         name='areaCode'
