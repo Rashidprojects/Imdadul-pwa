@@ -19,7 +19,7 @@ const Installment = () => {
 
   return (
     <div>
-        <div className={`flex-col justify-center items-center ${state.isInstallment ? 'flex' : 'flex' } `}>
+        <div className={`flex-col justify-center items-center ${state.isInstallment ? 'flex' : 'hidden' } `}>
                 <div className='flex justify-start w-[75%] sm:w-full items-start pl-20'>
                 <label className='text-start text-[15px] md:text-[20px]'>Add Installments</label>
                 </div>

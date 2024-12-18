@@ -9,3 +9,4 @@ select option:checked {
   background: linear-gradient(0deg, red 0%, red 100%);
   color: white; /* Optional: to change the text color when selected */
 }
+

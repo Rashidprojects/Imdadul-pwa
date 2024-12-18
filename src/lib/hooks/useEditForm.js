@@ -71,6 +71,11 @@ export const useEditForm = (initialData) => {
     dispatch({ type: "EDIT_INSTALLMENT", index });
   };
 
+  const handleIsInstallment = () => {
+    const newValue = !state.isInstallment;
+    dispatch({ type: 'SET_IS_INSTALLMENT', value: newValue })
+  }
+
   const handleRemoveInstallment = (index) => {
     dispatch({ type: "REMOVE_INSTALLMENT", index });
   };
@@ -122,12 +127,12 @@ export const useEditForm = (initialData) => {
 
 
   return {
-    state,
-    dispatch,
+    state, dispatch,
     handlers: {
       handleFieldChange,
       handleInstallmentChange,
       handleAddInstallment,
+      handleIsInstallment,
       handleEditInstallment,
       handleRemoveInstallment,
       handleSubmit,
