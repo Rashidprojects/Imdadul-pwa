@@ -3,9 +3,11 @@ import { useEditForm } from "../../lib/hooks/useEditForm";
 import { useUserContext } from "../../lib/providers/UserDataContext";
 import Installment from "./Installment";
 import InstallmentTable from "./InstallmentTable";
+import ExtraUsers from "./ExtraUsers";
+import ExtraDataTable from "./ExtraDataTable";
 
 const Form = () => {
-    const { state: userState } = useUserContext();
+    const { state: userState } = useUserContext();    
 
     const initialData = userState.editingUser
 
@@ -14,9 +16,11 @@ const Form = () => {
         handlers: {
           handleFieldChange,
           handleIsInstallment,
+          handleIsExtraUser,
           handleSubmit,
         },
       } = useEditForm(initialData);
+
   return (
     <div className="w-full flex justify-center pt-24 px-8 pb-24 sm:px-0">
       <form className="">
@@ -127,15 +131,17 @@ const Form = () => {
                     <button
                     className='bg-secondary text-light rounded-md text-center p-2 '
                     type="button"
-                    // onClick={handleIsExtraUser}
+                    onClick={handleIsExtraUser}
                     >
                     Add extra user
                     </button>
                 </div>
 
         <Installment />
+        <ExtraUsers />
 
         <InstallmentTable />
+        <ExtraDataTable /> 
 
         <div className='flex justify-center pt-20 gap-4' >
             <button

@@ -28,6 +28,7 @@ const REMOVE_INSTALLMENT = 'REMOVE_INSTALLMENT';
 const SET_EXTRAUSER = 'SET_EXTRAUSER';
 const ADD_EXTRAUSER = 'ADD_EXTRAUSER';
 const EDIT_EXTRAUSER = 'EDIT_EXTRAUSER';
+const REMOVE_EXTRAUSER = 'REMOVE_EXTRAUSER';
 const SET_IS_INSTALLMENT = 'SET_IS_INSTALLMENT';
 const SET_IS_EXTRAUSER = 'SET_IS_EXTRAUSER';
 const RESET_FORM = 'RESET_FORM';
@@ -54,7 +55,6 @@ const formContextReducer = (state, action) => {
       };
     case REMOVE_INSTALLMENT:
       return {
-        
         ...state,
         installments: state.installments.filter((_, i) => i !== action.index )
       };
@@ -72,6 +72,11 @@ const formContextReducer = (state, action) => {
         extraUser: state.extraUsers[action.index],
         extraUsers: state.extraUsers.filter((_, i) => i !== action.index),
       };
+    case REMOVE_EXTRAUSER:
+      return {
+        ...state,
+        extraUsers: state.extraUsers.filter((_, i) => i !== action.index ),
+      }
     case SET_IS_INSTALLMENT:
       return { ...state, isInstallment: action.value };
     case SET_IS_EXTRAUSER:
