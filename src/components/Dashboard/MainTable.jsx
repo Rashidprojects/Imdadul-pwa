@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import { usePagination } from '../../lib/providers/PaginationContext';
 import { useFilteredUsers } from '../../lib/hooks/useFilteredUsers';
-import { NumericFormat } from 'react-number-format';
 import { ImSearch } from "react-icons/im";
 import { MdPersonSearch } from "react-icons/md";
 import { FaEdit } from "react-icons/fa";
@@ -45,16 +44,31 @@ const MainTable = ({ isArea }) => {
       return;
     }    
 
-    const foundUser = filteredUsers.find(      
-      (user) => user.houseNumber ===  isFind
+    const isNumber = !isNaN(isFind)
+
+    if (isNumber) {
+    // Find a single user by houseNumber
+    const foundUser = filteredUsers.find(
+      (user) => user.houseNumber === isFind
     );
- 
     if (foundUser) {
       setFilteredUsers([foundUser]); // Display only the found user
     } else {
       setFilteredUsers([]); // Clear the list if no match is found
     }
+    } else {
+      // Find all users with the same username
+      const foundUsers = filteredUsers.filter(
+        (user) => user.username.toLowerCase() === isFind.toLowerCase()
+      );
+      if (foundUsers.length > 0) {
+        setFilteredUsers(foundUsers); // Display all matching users
+      } else {
+        setFilteredUsers([]); // Clear the list if no match is found
+      }
+    }
   }
+
 
 
   const handleKeyPress = (event) => {
@@ -69,11 +83,13 @@ const MainTable = ({ isArea }) => {
 
       {/* Find signgle user input field */}
       <div className= {` py-2 sm:pr-4 relative ${isArea !== '' ? 'flex' : 'hidden' } `} >
-        <NumericFormat  
-          placeholder='Enter House Number to Search'
+        <input 
+          type='text'
+          placeholder='Search user here....'
           onKeyDown={handleKeyPress}
           onChange={(e) => setIsFind(e.target.value)}
-          className='border border-light bg-dark rounded-md w-[280px] sm:w-[320px] pl-2 pr-4 py-1 sm:py-2 sm:text-[18px] placeholder:text-primary ' />
+          className='border border-light bg-dark rounded-md w-[280px] sm:w-[320px] pl-2 pr-4 py-1 sm:py-2 sm:text-[18px] placeholder:text-primary ' 
+          />
           <div 
             onClick={handleFindUser}
             className='absolute right-[10px] sm:right-[24px] bottom-[14px] px-1 sm:px-3 py-1  sm:py-2 rounded-md bg-secondary cursor-pointer z-10'>

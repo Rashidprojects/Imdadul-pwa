@@ -2,13 +2,19 @@ import { useEffect, useState } from "react";
 import AdminNav from "../AdminNav";
 import { useNavigate } from "react-router-dom";
 import { useUserContext } from "../../lib/providers/UserDataContext";
+import { filterAndSortInstallments } from "../../lib/utils/installments";
+import DeleteUserDialog from "../ui/alert-dialog/AlertDialog";
 
 const ProfileView = () => {
-    const { state, deleteUser } = useUserContext(); 
-    const navigate = useNavigate()   
-
     const [isUser, setIsUser] = useState(null)
 
+
+    const { state, deleteUser } = useUserContext(); 
+    const navigate = useNavigate()   
+    const sortedinstallments = filterAndSortInstallments(isUser?.installments || [])
+
+    console.log('final past + future install : ', sortedinstallments);
+    
 
     useEffect(() => {
         if (state.editingUser) {
@@ -62,13 +68,13 @@ const ProfileView = () => {
                          <div className="pb-10 overflow-auto w-[400px] sm:w-full">
                           <p className="font-semibold">Installments</p>
                           {
-                            isUser && isUser.installments.map((inst, index) => (
+                            isUser && sortedinstallments?.map((inst, index) => (
                             <>
                               <div key={index} className="flex list-none gap-5 sm:gap-28 bg-dark border border-primary px-4 sm:px-8 py-3 rounded-md text-[18px] sm:text-[20px] my-2 sm:font-semibold w-full overflow-auto">
-                                <li >{inst.name}</li>
-                                <li>{inst.date}</li>
-                                <li>{inst.receiptNo}</li>
-                                <li>{inst.receivedAmount}</li>
+                                <li > Installment {index + 1}</li>
+                                <li>{inst?.date}</li>
+                                <li>{inst?.receiptNo}</li>
+                                <li>{inst?.receivedAmount}</li>
                               </div>
                             </>
                             ))
@@ -101,12 +107,21 @@ const ProfileView = () => {
                 </div>
                 <div>
 
-                    <div className={`items-center flex justify-center ${isUser?.installments.length > 3 || isUser?.extraUsers.length > 3 ? 'mt-20' : 'mt-20 sm:mt-60' } `}>
+                    {/* <div className={`items-center flex justify-center ${isUser?.installments.length > 3 || isUser?.extraUsers.length > 3 ? 'mt-20' : 'mt-20 sm:mt-60' } `}>
                         <button onClick={() => { deleteUser(isUser?.id)
                             navigate('/user-dashboard') }
                         }
                         className="bg-red-500 text-white px-14 py-3 rounded-md font-semibold">Delete user</button>
-                    </div>
+                    </div> */}
+
+
+                    <DeleteUserDialog
+                      onConfirm={() => {
+                        deleteUser(isUser?.id);
+                        navigate("/user-dashboard");
+                      }}
+                    />
+
                 </div>
             </div>
             
