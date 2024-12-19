@@ -59,7 +59,7 @@ export const UserDataProvider = ({ children }) => {
     if (state.users.length === 0 || isOnline) {
       fetchUsers();  // Fetch data only if `users` is empty (initial load)
     }
-  }, [state.users.length, isOnline]); 
+  }, [state.users.length, isOnline, ]); 
 
 
   const deleteUser = async (id) => {

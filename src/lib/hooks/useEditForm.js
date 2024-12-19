@@ -80,6 +80,34 @@ export const useEditForm = (initialData) => {
     dispatch({ type: "REMOVE_INSTALLMENT", index });
   };
 
+  const handleExtraUserChange = (e) => {
+    const { name, value } = e.target;
+    dispatch({ type: 'SET_EXTRAUSER', name, value });
+  };
+
+  const handleAddExtraUser = () => {
+    if (!state.extraUser.name || !state.extraUser.date) {
+      alert('Complete all extra user fields.');
+      return;
+    }
+    dispatch({ type: 'ADD_EXTRAUSER' });
+    // setIsData(true)
+  };
+
+  const handleIsExtraUser = () => {
+    const newValue = !state.isExtraUser;
+    dispatch({ type: 'SET_IS_EXTRAUSER', value: newValue })
+  } 
+
+  const handleEditExtraUser = (index) => {
+    setEditIndex(index);
+    dispatch({ type: "EDIT_EXTRAUSER", index });
+  }; 
+
+  const handleRemoveExtraUser = (index) => {
+    dispatch({ type: "REMOVE_EXTRAUSER", index });
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -135,6 +163,11 @@ export const useEditForm = (initialData) => {
       handleIsInstallment,
       handleEditInstallment,
       handleRemoveInstallment,
+      handleExtraUserChange,
+      handleAddExtraUser,
+      handleIsExtraUser,
+      handleEditExtraUser,
+      handleRemoveExtraUser,
       handleSubmit,
     },
     uiState: { editIndex },
