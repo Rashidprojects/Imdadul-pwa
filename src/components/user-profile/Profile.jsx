@@ -105,20 +105,11 @@ const ProfileView = () => {
 
 
                 </div>
-                <div>
-
-                    {/* <div className={`items-center flex justify-center ${isUser?.installments.length > 3 || isUser?.extraUsers.length > 3 ? 'mt-20' : 'mt-20 sm:mt-60' } `}>
-                        <button onClick={() => { deleteUser(isUser?.id)
-                            navigate('/user-dashboard') }
-                        }
-                        className="bg-red-500 text-white px-14 py-3 rounded-md font-semibold">Delete user</button>
-                    </div> */}
-
-
+                <div className="flex justify-center">
                     <DeleteUserDialog
                       onConfirm={() => {
                         deleteUser(isUser?.id);
-                        navigate("/user-dashboard");
+                        navigate("/");
                       }}
                     />
 
