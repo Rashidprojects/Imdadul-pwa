@@ -3,9 +3,11 @@ import { useForm } from "../providers/FormContext";
 import { submitFundData } from "../services/firestoreService";
 import { useNavigate } from "react-router-dom";
 import { saveToIndexedDB } from "../utils/indexedDb";
+import { useUserContext } from "../providers/UserDataContext";
 
 export const useAddUserForm = () => {
   const { state, dispatch } = useForm();
+  const { fetchUsers } = useUserContext();
 
   const [editIndex, setEditIndex] = useState(false);  
   const [isData, setIsData] = useState(false)
@@ -40,14 +42,9 @@ export const useAddUserForm = () => {
     dispatch({ type: 'SET_FIELD', field: 'totalReceived', value: totalRecieved });
     dispatch({ type: 'SET_FIELD', field: 'pending', value: pending });
     dispatch({ type: 'SET_FIELD', field: 'subTotal', value: subTotal });
+
   },[totalRecieved, pending, subTotal, dispatch])
   
-
-  console.log('total amount on add form : ', state.totalAmount.replace(/,/g, ''));
-  console.log('total recieved : ', totalRecieved); 
-
-
-
   const handleFieldChange = (e) => {
     const { name, value } = e.target;
     dispatch({ type: 'SET_FIELD', field: name, value });
@@ -103,6 +100,22 @@ export const useAddUserForm = () => {
         alert('Please fill out all the user fields.');
       return;
     }
+
+    const allUsers = await fetchUsers();
+    console.log('Fetched users:', allUsers);
+
+    const isDuplicate = allUsers.some(
+      (user) => 
+        user.areaCode === state.areaCode &&
+        user.houseNumber === state.houseNumber
+    );
+
+    if (isDuplicate) {
+    alert('A user with this house number and area code already exists.');
+    return;
+  }
+
+
     e.preventDefault();
     dispatch({ type: 'SET_LOADING', value: true });
 
@@ -112,7 +125,7 @@ export const useAddUserForm = () => {
 
       if (navigator.onLine) {
         // Online mode: Submit data to Firestore
-        await submitFundData(state);
+        await submitFundData(state); //stateWithId
         console.log('Data submitted to Firestore');
       } else {
         // Offline mode: Save data to IndexedDB
