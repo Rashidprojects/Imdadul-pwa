@@ -5,7 +5,6 @@ export const useFilteredUsers = (users, areaCode, currentPage, itemsPerPage) => 
     const [filteredUsers, setFilteredUsers] = useState([]);
     const { dispatch } = useUserContext()
 
-
     useEffect(() => {
         let filtered = users;
 
@@ -26,11 +25,25 @@ export const useFilteredUsers = (users, areaCode, currentPage, itemsPerPage) => 
         const currentData = filteredUsers.slice(indexOfFirstItem, indexOfLastItem);
     
         dispatch({ type: 'CURRENT_DATA', payload: currentData });
+        dispatch({ type: 'FILTER_DATA', payload: filteredUsers });
+
         console.log('filtered current data passed: ', currentData);
     }, [filteredUsers, currentPage, itemsPerPage, dispatch]);
     
+    const totalAmount = filteredUsers.reduce((sum, user) => sum + user.subTotal , 0)
+    const pendingAmount = filteredUsers.reduce((sum, user) => sum + user.pending , 0)
+    const receivedAmount = totalAmount - pendingAmount
 
-    
-
-    return { filteredUsers, setFilteredUsers }
+    return { filteredUsers, setFilteredUsers, totalAmount, pendingAmount, receivedAmount }
 }
+
+
+export const useAmountSummary = (filteredData = []) => {
+    const total = filteredData.reduce((sum, user) => sum + user.subTotal, 0);
+    const pending = filteredData.reduce((sum, user) => sum + user.pending, 0);
+    const received = total - pending;
+
+    console.log('Total:', total, 'Pending:', pending, 'Received:', received);
+
+    return { total, pending, received };
+};

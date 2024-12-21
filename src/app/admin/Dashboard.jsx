@@ -6,6 +6,8 @@ import Loading from "../../components/Loading";
 import { usePagination } from "../../lib/providers/PaginationContext";
 import MainTable from "../../components/Dashboard/MainTable";
 import { useUserContext } from "../../lib/providers/UserDataContext";
+import { RiMoneyRupeeCircleFill } from "react-icons/ri";
+import { useAmountSummary } from "@/lib/hooks/useFilteredUsers";
 
 const Dashboard = () => {
     const { state: userState } = useUserContext();
@@ -13,7 +15,6 @@ const Dashboard = () => {
     const { state } = usePagination();
 
     const items = state.itemsPerPage;
-    const data = userState.currentData.length;
 
     const [isArea, setIsArea] = useState("");
     const [resetSelect, setResetSelect] = useState(false);
@@ -29,18 +30,22 @@ const Dashboard = () => {
         setTimeout(() => setResetSelect(false), 0); // Clear reset after triggering
     };
 
+    console.log('is anything have in filtered data ==== ', userState.filteredData);
+
+
+    const { total, pending, received } = useAmountSummary(userState.filteredData) // Default values if loading
+    console.log('the passed total value is : ', total);
+    
+    
     console.log("items count : ", items);
 
     return (
         <div
-            className={`bg-primary ${
-                items > 5 && data > 7 ? "h-auto" : "h-screen"
-            } pt-7 px-2 pb-4`}
+            className='bg-primary h-screen pt-5 '
         >
             <div
-                className={`bg-light ${
-                    items > 5 && data > 7 ? "h-auto" : "h-[100%]"
-                } rounded-xl`}
+                className='bg-light mx-1 sm:mx-4 h-[98%] overflow-y-auto rounded-lg '
+                style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
             >
                 <h1 className="text-center text-2xl sm:text-3xl p-5 font-semibold">
                     Welcome to Admin Dashboard!.
@@ -57,6 +62,28 @@ const Dashboard = () => {
                         onSelectionChange={handleSelectionChange}
                         reset={resetSelect}
                     />
+                </div>
+
+                <div className="flex flex-col sm:flex-row justify-center pt-5 gap-3">
+                    <div className="flex justify-center">
+                        <div className="bg-blue-500 p-4 sm:p-7 rounded-lg text-white">
+                            <p className="pb-2">Total Amount</p>
+                            <div>
+                                <p className="flex items-center gap-2 text-3xl sm:text-5xl"><RiMoneyRupeeCircleFill /> {total.toLocaleString('en-IN')}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="flex gap-2 justify-center">
+                        <div className="bg-green-500 rounded-lg p-4 sm:p-7 text-white ">
+                            <p className="pb-1 pt-3">Recieved Amount</p>
+                            <p className="flex items-center gap-1 text-2xl sm:text-3xl"><RiMoneyRupeeCircleFill /> {received.toLocaleString('en-IN')}</p>
+                        </div>
+                        <div className="bg-yellow-500 rounded-lg p-4 sm:p-7 text-white">
+                            <p className="pb-1 pt-3">Pending Amount</p>
+                            <p className="flex items-center gap-1 text-2xl sm:text-3xl"><RiMoneyRupeeCircleFill /> {pending.toLocaleString('en-IN')}</p>
+                        </div>
+                    </div>
+                    
                 </div>
 
                 <div className="flex justify-end pr-5 pt-5 pb-5">

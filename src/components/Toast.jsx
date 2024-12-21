@@ -1,5 +1,6 @@
 import { useContext } from 'react';
 import { ToastContext } from '../lib/providers/ToastContext';
+import '../App.css'
 
 // Dynamically assign class based on the variant
 const getToastClass = (variant) => {
@@ -15,8 +16,9 @@ const getToastClass = (variant) => {
   }
 };
 
+
 function Toast() {
-  const { state, dispatch } = useContext(ToastContext)
+  const { state } = useContext(ToastContext)
   console.log('Toast state is : ', state);
   
 
@@ -26,10 +28,13 @@ function Toast() {
         <>
             <div
             key={index}
-            className={`fixed sm:right-2 sm:bottom-4 ml-2 mt-2 sm:mt-0 sm:ml-0 p-3 sm:p-4 rounded-md sm:rounded-lg shadow-md w-[300px] sm:w-[400px] font-semibold z-30  sm:text-[20px] ${getToastClass(toast.variant)}`}
+            className={`fixed sm:right-2 sm:bottom-4 ml-2 mt-2 sm:mt-0 sm:ml-0 p-3 sm:p-4 rounded-md sm:rounded-lg shadow-md w-[300px] sm:w-[400px] font-medium z-30  sm:text-[18px] ${getToastClass(toast.variant)}`}
             >
             <span>{toast.message}</span>
-            
+            <div
+              className="absolute bottom-0 left-0 h-[4px] bg-white animate-shrink-border"
+              style={{ width: '100%' }}
+            ></div> 
             </div>
             
         </>
