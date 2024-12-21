@@ -4,6 +4,8 @@ import { useNavigate } from "react-router-dom";
 import { useUserContext } from "../../lib/providers/UserDataContext";
 import { filterAndSortInstallments } from "../../lib/utils/installments";
 import DeleteUserDialog from "../ui/alert-dialog/AlertDialog";
+import { RiMoneyRupeeCircleFill } from "react-icons/ri";
+
 
 const ProfileView = () => {
     const [isUser, setIsUser] = useState(null)
@@ -23,14 +25,16 @@ const ProfileView = () => {
     },[state.editingUser])
 
   return (
-    <div className="bg-primary">
+    <div className="bg-primary h-screen">
           {/* <span className="border-r border-primary absolute h-[100%] left-[500px] "></span> */}
           <AdminNav currentSection="Add User" />
 
 
-        <div className={` bg-primary px-3 py-5 ${isUser?.installments.length > 3 || isUser?.extraUsers.length > 3 ? 'h-auto' : 'h-auto' } w-full flex justify-center `}>
+        <div className={` bg-primary px-3 py-5 w-full flex justify-center `}>
 
-            <div className=" bg-light rounded-md p-8 w-full sm:w-[60%] sm:px-40 ">
+            <div className=" bg-light h-screen rounded-md p-8 w-full sm:w-[60%] sm:px-40 overflow-y-auto "
+                style={{ scrollbarWidth: 'none', msOverflowStyle:'none' }}
+            >
                 
                 <div className="w-full">
                     <div className="flex justify-start ">
@@ -49,17 +53,17 @@ const ProfileView = () => {
 
                     </div>
                     <div className="flex justify-center gap-3 sm:gap-9">
-                        <div className="bg-red-300 px-4 sm:px-14 py-1 sm:py-3 rounded-lg">
-                            <h1 className="sm:text-2xl text-red-700">Total Amount</h1>
-                            <p className=" text-[24px] font-bold text-red-700">{isUser?.subTotal}</p>
+                        <div className="bg-blue-500 px-4 sm:px-14 py-1 sm:py-3 rounded-lg">
+                            <h1 className=" text-white">Total Amount</h1>
+                            <p className=" text-3xl font-medium text-white flex items-center gap-1"><RiMoneyRupeeCircleFill /> {isUser?.subTotal.toLocaleString('en-IN')}</p>
                         </div>
-                        <div className="bg-green-300 px-4 sm:px-8 py-1 sm:py-3 rounded-lg">
-                            <h1 className="sm:text-2xl text-green-700">Received Amount</h1>
-                            <p className="text-[24px] font-bold text-green-700">{isUser?.totalReceived}</p>
+                        <div className="bg-green-500 px-4 sm:px-8 py-1 sm:py-3 rounded-lg">
+                            <h1 className=" text-white">Received Amount</h1>
+                            <p className="text-3xl font-medium text-white flex items-center gap-1"><RiMoneyRupeeCircleFill /> {isUser?.totalReceived.toLocaleString('en-IN')}</p>
                         </div>
-                        <div className="bg-yellow-200 px-4 sm:px-8 py-1 sm:py-3 rounded-lg">
-                            <h1 className="sm:text-2xl text-yellow-700">Pending Amount</h1>
-                            <p className="text-[24px] font-bold text-yellow-700">{isUser?.pending}</p>
+                        <div className="bg-yellow-500 px-4 sm:px-8 py-1 sm:py-3 rounded-lg">
+                            <h1 className=" text-white">Pending Amount</h1>
+                            <p className="text-3xl font-medium text-white flex items-center gap-1"><RiMoneyRupeeCircleFill /> {isUser?.pending.toLocaleString('en-IN')}</p>
                         </div>
                     </div>
 
