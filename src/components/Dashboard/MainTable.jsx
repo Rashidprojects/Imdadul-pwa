@@ -1,3 +1,4 @@
+
 import { useEffect, useState } from 'react';
 import { usePagination } from '../../lib/providers/PaginationContext';
 import { useFilteredUsers } from '../../lib/hooks/useFilteredUsers';
@@ -26,6 +27,8 @@ const MainTable = ({ isArea }) => {
     currentPage,
     itemsPerPage,
   )
+
+  
 
   // Update total items whenever filteredUsers changes
   useEffect(() => {

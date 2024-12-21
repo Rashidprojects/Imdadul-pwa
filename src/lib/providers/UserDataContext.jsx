@@ -5,6 +5,7 @@ import { useOnlineStatus } from '../hooks/useOnlineStatus';
 const initialState = {
   users: [],
   currentData: [],
+  filteredData: [],
   loading: false,
   error: null,
   editingUser: null, // Add the editingUser state here
@@ -12,6 +13,7 @@ const initialState = {
 
 const FETCH_USERS = 'FETCH_USERS';
 const CURRENT_DATA = 'CURRENT_DATA'; 
+const FILTER_DATA = 'FILTER_DATA'; 
 const SET_LOADING = 'SET_LOADING';
 const SET_ERROR = 'SET_ERROR';
 const DELETE_USER = 'DELETE_USER';
@@ -23,6 +25,8 @@ const userReducer = (state, action) => {
       return { ...state, users: action.payload, loading: false };
     case CURRENT_DATA:
       return { ...state, currentData: action.payload }
+    case FILTER_DATA:
+      return { ...state, filteredData: action.payload }
     case SET_LOADING:
       return { ...state, loading: action.payload };
     case SET_ERROR:

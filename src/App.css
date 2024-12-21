@@ -3,10 +3,16 @@
   max-width: 2800px;
 }
 
-/* In your global CSS file or within a <style> block */
-select option:checked {
-  background: red;
-  background: linear-gradient(0deg, red 0%, red 100%);
-  color: white; /* Optional: to change the text color when selected */
+
+@keyframes shrink-border {
+  from {
+    width: 100%;
+  }
+  to {
+    width: 0;
+  }
 }
 
+.animate-shrink-border {
+  animation: shrink-border 3s linear forwards;
+}
