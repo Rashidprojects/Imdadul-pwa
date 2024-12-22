@@ -7,7 +7,10 @@ import { useUserContext } from "../providers/UserDataContext";
 
 export const useAddUserForm = () => {
   const { state, dispatch } = useForm();
-  const { fetchUsers } = useUserContext();
+  const { state: userState } = useUserContext();
+
+  console.log('the already added data is to check ==== ', userState.users);
+  
 
   const [editIndex, setEditIndex] = useState(false);  
   const [isData, setIsData] = useState(false)
@@ -96,27 +99,28 @@ export const useAddUserForm = () => {
   
 
   const handleSubmit = async (e) => {
+
+    e.preventDefault();
+
     if (!state.username || !state.houseNumber || !state.areaCode) {
         alert('Please fill out all the user fields.');
       return;
     }
 
-    const allUsers = await fetchUsers();
-    console.log('Fetched users:', allUsers);
 
-    const isDuplicate = allUsers.some(
+    const isDuplicate = userState.users.some(
+      
       (user) => 
         user.areaCode === state.areaCode &&
-        user.houseNumber === state.houseNumber
-    );
-
+        user.houseNumber === state.houseNumber 
+    )
+    
     if (isDuplicate) {
     alert('A user with this house number and area code already exists.');
+    dispatch({ type: 'SET_LOADING', value: false });
     return;
-  }
+  } 
 
-
-    e.preventDefault();
     dispatch({ type: 'SET_LOADING', value: true });
 
     try {
@@ -132,7 +136,8 @@ export const useAddUserForm = () => {
         await saveToIndexedDB('fundCollectionData', stateWithId);
         console.log('Data saved to IndexedDB for offline sync with id : ', state.id);
       }
-      dispatch({ type: 'RESET_FORM' });
+
+      !isDuplicate && dispatch({ type: 'RESET_FORM' });
       dispatch({ type: 'SET_IS_INSTALLMENT', value: false })
 
     } catch (error) {
