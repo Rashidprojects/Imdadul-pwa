@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useForm } from "../providers/FormContext";
 import { submitFundData } from "../services/firestoreService";
 import { useNavigate } from "react-router-dom";
-import { saveToIndexedDB } from "../utils/indexedDb";
+import { saveToIndexedDB } from "../utils/indexedData";
 import { useUserContext } from "../providers/UserDataContext";
 
 export const useAddUserForm = () => {

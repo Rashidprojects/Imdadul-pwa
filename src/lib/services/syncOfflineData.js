@@ -1,7 +1,6 @@
 import { addDoc, collection, getDocs, query, orderBy, updateDoc, doc } from "firebase/firestore";
-import { getAllFromIndexedDB, deleteFromIndexedDB } from "../utils/indexedDb";
 import { db } from "../../config/firebase";
-import { deleteField } from "firebase/firestore";  // Import deleteField from firebase/firestore
+import { deleteFromIndexedDB, getAllFromIndexedDB } from "../utils/indexedData";
 
 let isSyncing = false; // Flag to prevent concurrent syncs
 

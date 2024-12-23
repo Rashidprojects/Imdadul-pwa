@@ -1,5 +1,5 @@
 import { setDoc, doc, addDoc, collection, getDocs, deleteDoc, query, orderBy } from "firebase/firestore";
-import { saveToIndexedDB, getAllFromIndexedDB } from "../utils/indexedDb";
+import { saveToIndexedDB, getAllFromIndexedDB } from "../utils/indexedData";
 import { db } from "../../config/firebase";
 
 // Function to add user data to Firestore
