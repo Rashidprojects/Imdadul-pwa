@@ -128,6 +128,12 @@ export const useEditForm = (initialData) => {
         alert("Please fill out all the user fields.");
         return;
     }
+
+    if (state.mobile.length > 0 && !/^\d{10}$/.test(state.mobile)) {
+      alert('Please enter a valid 10-digit mobile number.');
+      return; 
+    }
+    
     dispatch({ type: "SET_LOADING", value: true });
 
     try {

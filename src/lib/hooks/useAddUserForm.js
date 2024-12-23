@@ -107,6 +107,10 @@ export const useAddUserForm = () => {
       return;
     }
 
+    if (state.mobile.length > 0 && !/^\d{10}$/.test(state.mobile)) {
+      alert('Please enter a valid 10-digit mobile number.');
+      return; 
+    }
 
     const isDuplicate = userState.users.some(
       

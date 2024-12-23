@@ -97,6 +97,7 @@ const Form = () => {
                             value={state.mobile}
                             onChange={handleFieldChange}
                             autoComplete="off"
+                            isAllowed={(values) => values.value.length <= 10 }
                             />
                         </div>
                         <div className='w-[50%] '>
