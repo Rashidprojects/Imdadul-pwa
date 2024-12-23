@@ -7,9 +7,11 @@ import { MdPersonSearch } from "react-icons/md";
 import { FaEdit } from "react-icons/fa";
 import { useNavigate } from 'react-router-dom';
 import { useUserContext } from '../../lib/providers/UserDataContext';
+import { useForm } from '@/lib/providers/FormContext';
 
 const MainTable = ({ isArea }) => {
   const { state: userState, fetchUsers, setEditingUser } = useUserContext();
+  const { state: mainState } = useForm()
   const { state, setTotalItems } = usePagination();
   const { currentPage, itemsPerPage } = state;
   const navigate = useNavigate()
@@ -24,6 +26,10 @@ const MainTable = ({ isArea }) => {
     itemsPerPage,
   )
 
+  console.log('main table updated users are === ', userState);
+  console.log('main table updated main users are === ', mainState);
+
+  
   
 
   // Update total items whenever filteredUsers changes

@@ -1,4 +1,4 @@
-import { addDoc, collection, getDocs, query, orderBy, updateDoc, doc } from "firebase/firestore";
+import { addDoc, collection, getDocs, query, orderBy, updateDoc, doc, deleteField } from "firebase/firestore";
 import { db } from "../../config/firebase";
 import { deleteFromIndexedDB, getAllFromIndexedDB } from "../utils/indexedData";
 
@@ -27,18 +27,29 @@ export const syncOfflineDataToFirestore = async () => {
         let currentSiNo = highestSiNo;
 
         for (const item of offlineData) {
-            if (item.id) {
-                // Existing item: update
-                await updateDoc(doc(db, "fundCollectionData", item.id), item);
-            } else {
-                // New item: add with new siNo
-                currentSiNo++;
-                const newData = { ...item, siNo: currentSiNo };
-                const docRef = await addDoc(fundCollection, newData);
-                await updateDoc(doc(db, "fundCollectionData", docRef.id), { id: docRef.id });
-            }
-            await deleteFromIndexedDB("fundCollectionData", item.id || item.siNo);
+      try {
+
+        if (item.id) {
+          await updateDoc(doc(db, "fundCollectionData", item.id), item);
+        } else {
+          currentSiNo += 1;
+          item.siNo = currentSiNo;
+
+          const docRef = await addDoc(fundCollection, item);
+
+          await updateDoc(docRef, {
+            id: deleteField() // Use deleteField to delete the 'id' field
+          });
         }
+
+        // After adding to Firestore, delete the item from IndexedDB
+        await deleteFromIndexedDB("fundCollectionData", item.id || item.siNo); // Ensure item.id exists before calling this
+        console.log(`Synced and removed item from IndexedDB: ${item.id}`);
+      } catch (innerError) {
+        console.error("Error processing item:", item, innerError);
+      }
+    }
+
     } catch (error) {
         console.error("Error syncing offline data to Firestore:", error);
     } finally {
