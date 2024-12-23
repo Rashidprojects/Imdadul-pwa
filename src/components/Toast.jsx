@@ -18,9 +18,7 @@ const getToastClass = (variant) => {
 
 
 function Toast() {
-  const { state } = useContext(ToastContext)
-  console.log('Toast state is : ', state);
-  
+  const { state } = useContext(ToastContext)  
 
   return (
     <div >

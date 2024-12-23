@@ -9,10 +9,7 @@ const InstallmentTable = () => {
 
     const onEditInstallment = (index) => {
         handleEditInstallment(index)
-    }
-
-    console.log('state of installments : ', state.installments);
-    
+    }    
 
   return (
     <div className={ ` ${state.installments.length > 0 ? 'flex' : 'hidden' } overflow-auto rounded-lg shadow mx-5 sm:w-[50%] mt-8 `}>

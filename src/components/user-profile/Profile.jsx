@@ -15,7 +15,6 @@ const ProfileView = () => {
     const navigate = useNavigate()   
     const sortedinstallments = filterAndSortInstallments(isUser?.installments || [])
 
-    console.log('final past + future install : ', sortedinstallments);
     
 
     useEffect(() => {
