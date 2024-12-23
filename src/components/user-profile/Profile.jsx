@@ -10,12 +10,9 @@ import { RiMoneyRupeeCircleFill } from "react-icons/ri";
 const ProfileView = () => {
     const [isUser, setIsUser] = useState(null)
 
-
     const { state, deleteUser } = useUserContext(); 
     const navigate = useNavigate()   
     const sortedinstallments = filterAndSortInstallments(isUser?.installments || [])
-
-    
 
     useEffect(() => {
         if (state.editingUser) {
@@ -51,7 +48,7 @@ const ProfileView = () => {
                         <p className="text-[18px] font-semibold mt-2">amount : <span className="text-[20px] text-secondary">{isUser?.totalAmount}</span></p>
 
                     </div>
-                    <div className="flex justify-center gap-3 sm:gap-9">
+                    <div className="flex justify-center flex-col sm:flex-row gap-3 sm:gap-9">
                         <div className="bg-blue-500 px-4 sm:px-14 py-1 sm:py-3 rounded-lg">
                             <h1 className=" text-white">Total Amount</h1>
                             <p className=" text-3xl font-medium text-white flex items-center gap-1"><RiMoneyRupeeCircleFill /> {isUser?.subTotal.toLocaleString('en-IN')}</p>
