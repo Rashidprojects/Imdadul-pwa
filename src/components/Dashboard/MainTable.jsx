@@ -16,10 +16,6 @@ const MainTable = ({ isArea }) => {
 
   const [isFind, setIsFind] = useState('')
 
-  console.log('is anything have in current data : ', userState.currentData);
-  
-  
-
   // Custom hook to manage filtered users and pagination
   const { filteredUsers, setFilteredUsers } = useFilteredUsers(
     userState.users,

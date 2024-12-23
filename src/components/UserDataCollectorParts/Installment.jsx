@@ -7,14 +7,8 @@ const Installment = () => {
         handlers: {
             handleInstallmentChange,
             handleAddInstallment
-        },
-        uiState: {
-            editIndex
         }
-    } = useAddUserForm();
-
-    console.log('what is the currentstatus of edit : ', editIndex);
-    
+    } = useAddUserForm();    
     
 
   return (

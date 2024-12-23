@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import Pagination from "../../components/Pagination";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import CustomSelect from "../../components/Dashboard/CustomSelect";
 import Loading from "../../components/Loading";
 import { usePagination } from "../../lib/providers/PaginationContext";
@@ -12,9 +12,9 @@ import { useAmountSummary } from "@/lib/hooks/useFilteredUsers";
 const Dashboard = () => {
     const { state: userState } = useUserContext();
     const navigate = useNavigate();
-    const { state } = usePagination();
+    // const { state } = usePagination();
 
-    const items = state.itemsPerPage;
+    // const items = state.itemsPerPage;
 
     const [isArea, setIsArea] = useState("");
     const [resetSelect, setResetSelect] = useState(false);
@@ -30,14 +30,7 @@ const Dashboard = () => {
         setTimeout(() => setResetSelect(false), 0); // Clear reset after triggering
     };
 
-    console.log('is anything have in filtered data ==== ', userState.filteredData);
-
-
     const { total, pending, received } = useAmountSummary(userState.filteredData) // Default values if loading
-    console.log('the passed total value is : ', total);
-    
-    
-    console.log("items count : ", items);
 
     return (
         <div

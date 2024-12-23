@@ -6,7 +6,6 @@ let isSyncing = false; // Flag to prevent concurrent syncs
 
 export const syncOfflineDataToFirestore = async () => {
     if (isSyncing) {
-        console.log("Sync already in progress. Skipping duplicate sync.");
         return;
     }
 
@@ -15,7 +14,6 @@ export const syncOfflineDataToFirestore = async () => {
     try {
         const offlineData = await getAllFromIndexedDB("fundCollectionData");
         if (!offlineData || offlineData.length === 0) {
-            console.log("No offline data found to sync.");
             return;
         }
 
@@ -32,13 +30,11 @@ export const syncOfflineDataToFirestore = async () => {
             if (item.id) {
                 // Existing item: update
                 await updateDoc(doc(db, "fundCollectionData", item.id), item);
-                console.log(`Document with id: ${item.id} updated successfully.`);
             } else {
                 // New item: add with new siNo
                 currentSiNo++;
                 const newData = { ...item, siNo: currentSiNo };
                 const docRef = await addDoc(fundCollection, newData);
-                console.log(`Document added successfully with new id: ${docRef.id} and siNo: ${currentSiNo}`);
                 await updateDoc(doc(db, "fundCollectionData", docRef.id), { id: docRef.id });
             }
             await deleteFromIndexedDB("fundCollectionData", item.id || item.siNo);
