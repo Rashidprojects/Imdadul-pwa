@@ -3,7 +3,7 @@ import { useUserContext } from "../providers/UserDataContext";
 
 export const useFilteredUsers = (users, areaCode, currentPage, itemsPerPage) => {
     const [filteredUsers, setFilteredUsers] = useState([]);
-    const { dispatch } = useUserContext()
+    const { state, dispatch } = useUserContext()
 
     useEffect(() => {
         let filtered = users;

@@ -1,6 +1,8 @@
 import { createContext, useReducer, useContext, useEffect } from 'react';
 import { fetchFundData, deleteFundData } from '../services/firestoreService';
 import { useOnlineStatus } from '../hooks/useOnlineStatus';
+import { useForm } from './FormContext';
+import { saveToIndexedDB } from '../utils/indexedData';
 
 const initialState = {
   users: [],
@@ -48,6 +50,7 @@ const UserDataContext = createContext();
 export const UserDataProvider = ({ children }) => {
   const [state, dispatch] = useReducer(userReducer, initialState);
   const isOnline = useOnlineStatus()
+  const { state: formState } = useForm()
 
   const fetchUsers = async () => {
     dispatch({ type: SET_LOADING, payload: true });
@@ -60,10 +63,10 @@ export const UserDataProvider = ({ children }) => {
   };
 
   useEffect(() => {
-    if (state.users.length === 0 || isOnline) {
+    if (state.users.length === 0 || isOnline || !isOnline || saveToIndexedDB) {
       fetchUsers();  // Fetch data only if `users` is empty (initial load)
     }
-  }, [state.users.length, isOnline, ]); 
+  }, [state.users.length, isOnline, formState,  ]); 
 
 
   const deleteUser = async (id) => {
