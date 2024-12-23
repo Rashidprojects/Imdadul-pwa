@@ -3,18 +3,17 @@ import Pagination from "../../components/Pagination";
 import { useState } from "react";
 import CustomSelect from "../../components/Dashboard/CustomSelect";
 import Loading from "../../components/Loading";
-import { usePagination } from "../../lib/providers/PaginationContext";
 import MainTable from "../../components/Dashboard/MainTable";
 import { useUserContext } from "../../lib/providers/UserDataContext";
 import { RiMoneyRupeeCircleFill } from "react-icons/ri";
 import { useAmountSummary } from "@/lib/hooks/useFilteredUsers";
+import { useForm } from "@/lib/providers/FormContext";
 
 const Dashboard = () => {
     const { state: userState } = useUserContext();
+    const { dispatch } = useForm()
     const navigate = useNavigate();
-    // const { state } = usePagination();
-
-    // const items = state.itemsPerPage;
+    
 
     const [isArea, setIsArea] = useState("");
     const [resetSelect, setResetSelect] = useState(false);
@@ -80,8 +79,11 @@ const Dashboard = () => {
                 </div>
 
                 <div className="flex justify-end pr-5 pt-5 pb-5">
-                    <button
-                        onClick={() => navigate("/add-user")}
+                    <button 
+                        onClick={() => {
+                            dispatch({ type: 'RESET_FORM' }),
+                            navigate("/add-user")
+                        } }
                         className="bg-light text-secondary border-2 border-secondary w-[140px] sm:w-[160px] p-2 sm:p-2 rounded-md sm:text-[20px] font-semibold"
                     >
                         Add new user

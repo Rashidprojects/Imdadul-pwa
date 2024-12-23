@@ -15,11 +15,9 @@ const ExtraUsers = () => {
 
   return (
     <div>
-        <div className={`flex-col justify-center items-center ${state.isExtraUser ? 'flex' : 'hidden' } pt-5`}>
-            <div className='flex justify-start w-[75%] sm:w-full items-start'>
-            <label className='text-start text-[15px] md:text-[20px]'>Add Extra User</label>
-            </div>
-            <div className='w-[75%] sm:w-full flex flex-col border border-primary py-5 px-2 sm:px-8 bg-dark rounded-md'>
+        <h1 className="pt-7">Add Extra User</h1>
+        <div className={`flex-col justify-center items-center ${state.isExtraUser ? 'flex' : 'hidden' } `}>
+            <div className='w-full flex flex-col border border-primary py-5 px-2 sm:px-8 bg-dark rounded-md'>
                 <div className='w-full flex flex-col gap-3 sm:flex-row  '>
                     <div className='w-full sm:w-[50%] gap-3 flex '>
                         <div className='w-[50%]'>

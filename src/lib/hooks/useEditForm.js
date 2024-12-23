@@ -150,7 +150,7 @@ export const useEditForm = (initialData) => {
             console.log("Data saved to IndexedDB for offline sync.");
         }
 
-        dispatch({ type: "RESET_FORM" });
+        dispatch({ type: "RESET_FORM" }); 
     } catch (error) {
         dispatch({ type: "SET_ERROR", value: error.message });
     } finally {
